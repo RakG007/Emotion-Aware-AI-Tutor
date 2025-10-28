@@ -1,5 +1,37 @@
 let currentSubject = "";
 
+// 🎙️ Voice with emotion tone
+function speak(text, emotion = "neutral") {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  switch (emotion) {
+    case "happy":
+      utterance.pitch = 1.4;
+      utterance.rate = 1.2;
+      break;
+    case "sad":
+      utterance.pitch = 0.7;
+      utterance.rate = 0.9;
+      break;
+    case "angry":
+      utterance.pitch = 0.9;
+      utterance.rate = 1.1;
+      break;
+    case "surprised":
+      utterance.pitch = 1.3;
+      utterance.rate = 1.3;
+      break;
+    default:
+      utterance.pitch = 1;
+      utterance.rate = 1;
+  }
+
+  utterance.lang = "en-US";
+  synth.cancel();
+  synth.speak(utterance);
+}
+
 async function selectSubject(subject) {
   currentSubject = subject;
   document.getElementById('subjectSelection').style.display = 'none';
@@ -10,34 +42,36 @@ async function selectSubject(subject) {
   const feedback = document.getElementById('feedback');
   const video = document.getElementById('video');
 
-  // Set initial content based on chosen subject
   switch (subject) {
     case 'os':
       subjectTitle.innerText = "Operating Systems (OS)";
-      lessonText.innerText = "An Operating System manages hardware, software, and system resources. It acts as an interface between user and machine.";
+      lessonText.innerText = "An Operating System manages hardware, software, and system resources.";
+      speak("Welcome to Operating Systems! Let's explore how your computer manages everything.", "happy");
       break;
     case 'adsa':
       subjectTitle.innerText = "Advanced Data Structures & Algorithms (ADSA)";
-      lessonText.innerText = "ADSA focuses on efficient ways to store, process, and manipulate data using algorithms and abstract structures.";
+      lessonText.innerText = "ADSA focuses on efficient ways to store and manipulate data using algorithms.";
+      speak("Welcome to Advanced Data Structures and Algorithms. Let's make data dance!", "happy");
       break;
     case 'java':
       subjectTitle.innerText = "Java Programming";
-      lessonText.innerText = "Java is an object-oriented programming language that enables secure, portable, and scalable software development.";
+      lessonText.innerText = "Java is an object-oriented language for building secure and scalable software.";
+      speak("Welcome to Java Programming. Let's code some magic!", "happy");
       break;
   }
 
-  // Load models for face detection
   feedback.innerHTML = "Loading AI models...";
   await Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
     faceapi.nets.faceExpressionNet.loadFromUri('/models')
   ]);
 
-  // Start webcam
   navigator.mediaDevices.getUserMedia({ video: {} })
-    .then(stream => { video.srcObject = stream; feedback.innerHTML = "Analyzing emotions..."; });
+    .then(stream => {
+      video.srcObject = stream;
+      feedback.innerHTML = "Analyzing emotions...";
+    });
 
-  // Listen and adapt responses
   video.addEventListener('play', () => {
     const canvas = faceapi.createCanvasFromMedia(video);
     document.body.append(canvas);
@@ -56,10 +90,9 @@ async function selectSubject(subject) {
       if (detections.length > 0) {
         const emotions = detections[0].expressions;
         const topEmotion = Object.keys(emotions).reduce((a, b) => emotions[a] > emotions[b] ? a : b);
-        
         adaptLesson(topEmotion);
       }
-    }, 1000);
+    }, 1500);
   });
 }
 
@@ -68,27 +101,29 @@ function adaptLesson(emotion) {
   const lessonText = document.getElementById('lessonText');
 
   const reactions = {
-    happy: "😊 You look interested! Let's dive deeper into this topic.",
-    neutral: "🙂 Stay focused — learning is going well.",
-    sad: "😔 Seems like you’re feeling low. Let’s simplify the topic.",
-    surprised: "😮 Curious? That’s the spark of learning!",
-    angry: "😡 Don’t worry, take a short break and return refreshed."
+    happy: "You look happy! Let's keep up this great energy!",
+    neutral: "Stay focused — you're doing great.",
+    sad: "Seems like you’re feeling a bit down. Let's make it simpler.",
+    surprised: "You look curious! Let's explore more together.",
+    angry: "Take a deep breath — we’ll go through this step by step."
   };
 
-  feedback.innerText = reactions[emotion] || "Keep learning, you’re doing great!";
+  const message = reactions[emotion] || "Keep learning — you're doing awesome!";
+  feedback.innerText = message;
+  speak(message, emotion);
 
-  // Change content slightly based on emotion
   if (emotion === "sad" || emotion === "angry") {
     if (currentSubject === "os")
-      lessonText.innerText = "OS manages your computer — think of it like a traffic controller simplifying your tasks.";
+      lessonText.innerText = "Think of an OS like your computer's manager — it simplifies everything for you.";
     else if (currentSubject === "adsa")
-      lessonText.innerText = "Algorithms are just step-by-step instructions — like cooking recipes for data!";
+      lessonText.innerText = "Algorithms are just recipes for data — let's make it fun!";
     else if (currentSubject === "java")
-      lessonText.innerText = "In Java, start simple: variables, loops, and conditions — then move to OOP.";
+      lessonText.innerText = "In Java, start small with variables and loops before big projects.";
   }
 }
 
 function goBack() {
   document.getElementById('subjectSelection').style.display = 'block';
   document.getElementById('learningSection').style.display = 'none';
+  window.speechSynthesis.cancel();
 }
