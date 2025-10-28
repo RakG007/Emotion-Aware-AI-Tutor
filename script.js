@@ -1,80 +1,79 @@
-// script.js — Fixed for GitHub Pages path
+// ----------------------------
+// Emotion-Aware AI Tutor Script
+// ----------------------------
 
-const video = document.getElementById("video");
-const subjectTitle = document.getElementById("subject-title");
-const subjectDesc = document.getElementById("subject-desc");
+// ✅ Correct GitHub Pages path for model loading
+const MODEL_URL = 'https://rakg007.github.io/Emotion-Aware-AI-Tutor/models';
 
-// ✅ Correct model path for GitHub Pages
-const MODEL_URL = "/Emotion-Aware-AI-Tutor/models";
+// Wait for face-api.js models to load
+async function loadModels() {
+  document.getElementById('status').innerText = 'Loading AI models...';
+  await Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+    faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
+    faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
+  ]);
+  document.getElementById('status').innerText = 'Models loaded! Starting camera...';
+  startVideo();
+}
 
-Promise.all([
-  faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-  faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
-  faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL)
-])
-  .then(startVideo)
-  .catch(err => {
-    console.error("Error loading models:", err);
-    document.querySelector(".status").innerText = "Error loading AI models.";
-  });
-
+// Start webcam feed
 function startVideo() {
-  navigator.mediaDevices
-    .getUserMedia({ video: {} })
+  const video = document.getElementById('video');
+  navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
       video.srcObject = stream;
-      document.querySelector(".status").innerText = "Camera started. Detecting...";
     })
     .catch(err => {
-      console.error("Camera error:", err);
-      document.querySelector(".status").innerText = "Camera access denied.";
+      console.error(err);
+      alert('Please allow camera access for emotion detection.');
     });
 }
 
-video.addEventListener("play", () => {
+// Analyze emotions continuously
+async function onPlay() {
+  const video = document.getElementById('video');
   const canvas = faceapi.createCanvasFromMedia(video);
-  document.body.append(canvas);
-
+  document.querySelector('.video-container').append(canvas);
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
 
   setInterval(async () => {
-    const detections = await faceapi
-      .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
       .withFaceExpressions()
       .withAgeAndGender();
 
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
     faceapi.draw.drawDetections(canvas, resizedDetections);
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
 
-    if (detections[0]) {
-      const { age, gender, expressions } = detections[0];
-      const mood = Object.keys(expressions).reduce((a, b) =>
-        expressions[a] > expressions[b] ? a : b
-      );
-      updateTutorResponse(mood);
+    if (detections.length > 0) {
+      const { expressions } = detections[0];
+      const emotion = Object.keys(expressions).reduce((a, b) => expressions[a] > expressions[b] ? a : b);
+      speakFeedback(emotion);
     }
-  }, 1000);
-});
-
-function updateTutorResponse(mood) {
-  const status = document.querySelector(".status");
-  switch (mood) {
-    case "happy":
-      status.innerText = "You look happy 😄 — let's keep learning!";
-      break;
-    case "sad":
-      status.innerText = "Feeling down? Don’t worry, we’ll take it easy.";
-      break;
-    case "angry":
-      status.innerText = "Looks like some frustration — want to try a simpler topic?";
-      break;
-    case "surprised":
-      status.innerText = "Surprised? Let’s explore something new!";
-      break;
-    default:
-      status.innerText = `Mood detected: ${mood}`;
-  }
+  }, 2000);
 }
+
+// Voice feedback
+function speakFeedback(emotion) {
+  const synth = window.speechSynthesis;
+  let message = '';
+
+  switch (emotion) {
+    case 'happy': message = 'You look happy! Keep learning with enthusiasm!'; break;
+    case 'sad': message = 'Feeling down? Let’s make learning more fun!'; break;
+    case 'angry': message = 'Take a deep breath. Let’s focus calmly.'; break;
+    case 'surprised': message = 'Surprised? That’s great curiosity!'; break;
+    default: message = 'Keep going, you’re doing great!'; break;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(message);
+  utterance.lang = 'en-US';
+  synth.cancel(); // stop overlapping voices
+  synth.speak(utterance);
+}
+
+// Start once page loads
+window.addEventListener('load', loadModels);
