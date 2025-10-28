@@ -3,47 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Emotion-Based Tutor</title>
+  <title>AI Emotion–Based Tutor</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-  <script defer src="face-api.min.js"></script>
+
+  <!-- Face API CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+
+  <!-- Main Script -->
   <script defer src="script.js"></script>
 </head>
 <body>
-  <canvas id="particle-canvas"></canvas>
-  <div class="overlay"></div>
-
   <header>
-    <h1>AI Emotion-Based Tutor</h1>
+    <h1>AI Emotion–Based Tutor</h1>
     <p>Learn interactively — your tutor adapts to your mood.</p>
   </header>
 
   <main>
-    <section id="subjectSelection" class="subjects">
-      <div class="card" onclick="selectSubject('os')">
-        <h2>Operating Systems (OS)</h2>
-        <p>Learn how your computer manages resources.</p>
+    <div class="subjects">
+      <div class="card" onclick="selectSubject('Operating Systems (OS)')">
+        <h3>Operating Systems (OS)</h3>
+        <p>Learn about processes, memory management, and synchronization.</p>
       </div>
-      <div class="card" onclick="selectSubject('adsa')">
-        <h2>ADSA</h2>
-        <p>Understand algorithms and data structures deeply.</p>
-      </div>
-      <div class="card" onclick="selectSubject('java')">
-        <h2>Java Programming</h2>
-        <p>Build powerful and scalable applications.</p>
-      </div>
-    </section>
 
-    <section id="learningSection" style="display: none;">
-      <h2 id="subjectTitle"></h2>
-      <p id="lessonText"></p>
-      <video id="video" width="400" height="300" autoplay muted></video>
-      <p id="feedback"></p>
-      <button onclick="goBack()">Back</button>
+      <div class="card" onclick="selectSubject('ADSA')">
+        <h3>ADSA</h3>
+        <p>Analyze algorithms and data structures for scalable computing.</p>
+      </div>
+
+      <div class="card" onclick="selectSubject('Java Programming')">
+        <h3>Java Programming</h3>
+        <p>Object-oriented design, socket communication, and threading.</p>
+      </div>
+    </div>
+
+    <section class="ai-section">
+      <video id="video" width="420" height="320" autoplay muted></video>
+      <p id="status">Loading AI models...</p>
+      <button id="backBtn" onclick="goBack()">Back</button>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 AI Tutor | Built with ❤️ using JavaScript & face-api.js</p>
+    <p>© 2025 AI Emotion–Based Tutor | Built with ❤️ by Rakshak Gupta </p>
   </footer>
 </body>
 </html>
