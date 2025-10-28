@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emotion-Aware AI Tutor | Rakshak Gupta</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Subjects Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="overlay"></div>
+
   <header>
-    <h1>Emotion-Aware AI Tutor for Personalized E-Learning</h1>
-    <p>Detects your emotions and adapts learning for OS, ADSA, and Java</p>
+    <h1>My GitHub Project</h1>
+    <p>Operating Systems • ADSA • Java</p>
   </header>
 
-  <div class="container">
-    <!-- Subject Selection -->
-    <div id="subjectSelection" class="fade-in">
-      <h2>Select a Subject</h2>
-      <button class="mode-button" onclick="selectSubject('os')">Operating Systems (OS)</button>
-      <button class="mode-button" onclick="selectSubject('adsa')">ADSA (Algorithms & Data Structures)</button>
-      <button class="mode-button" onclick="selectSubject('java')">Java Programming</button>
-    </div>
-
-    <!-- Learning Section -->
-    <div id="learningSection" class="fade-in" style="display:none;">
-      <h2 id="subjectTitle"></h2>
-      <p id="lessonText"></p>
-
-      <video id="video" autoplay muted></video>
-      <div id="feedback" style="margin-top:20px; font-size:1.2em;"></div>
-
-      <button class="back-button" onclick="goBack()">Back to Subjects</button>
-    </div>
-
-    <div class="credits">
-      <p><strong>Developed by:</strong> Rakshak Gupta</p>
-    </div>
-  </div>
+  <main>
+    <section class="subjects">
+      <div class="card">
+        <h2>Operating Systems (OS)</h2>
+        <p>Learn about processes, memory management, synchronization, and scheduling.</p>
+      </div>
+      <div class="card">
+        <h2>ADSA</h2>
+        <p>Analyze data structures and algorithms for scalable and efficient computing.</p>
+      </div>
+      <div class="card">
+        <h2>Java Programming</h2>
+        <p>Object-oriented design, socket communication, and multithreading in Java.</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    © 2025 Rakshak Gupta | Emotion-Aware AI Tutor
+    <p>© 2025 My GitHub Project | Built with ❤️</p>
   </footer>
 
-  <!-- Scripts -->
-  <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/dist/face-api.min.js"></script>
-  <script defer src="script.js"></script>
+  <script>
+    // Moving background effect
+    document.addEventListener("mousemove", (e) => {
+      const moveX = (e.clientX * -0.03);
+      const moveY = (e.clientY * -0.03);
+      document.body.style.backgroundPosition = `${moveX}px ${moveY}px`;
+    });
+  </script>
 </body>
 </html>
