@@ -3,50 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Emotion–Based Tutor</title>
-
-  <!-- CSS -->
+  <title>AI Emotion-Based Tutor</title>
   <link rel="stylesheet" href="style.css" />
 
   <!-- Face API CDN -->
-  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
   <!-- Main Script -->
   <script defer src="script.js"></script>
 </head>
-<body>
-  <header>
-    <h1>AI Emotion–Based Tutor</h1>
-    <p>Learn interactively — your tutor adapts to your mood.</p>
-  </header>
 
-  <main>
+<body>
+  <div class="container">
+    <h1>AI Emotion–Based Tutor</h1>
+    <p class="subtitle">Learn interactively — your tutor adapts to your mood.</p>
+
+    <!-- Subject selection section -->
     <div class="subjects">
       <div class="card" onclick="selectSubject('Operating Systems (OS)')">
-        <h3>Operating Systems (OS)</h3>
+        <h2>Operating Systems (OS)</h2>
         <p>Learn about processes, memory management, and synchronization.</p>
       </div>
 
-      <div class="card" onclick="selectSubject('ADSA')">
-        <h3>ADSA</h3>
-        <p>Analyze algorithms and data structures for scalable computing.</p>
+      <div class="card" onclick="selectSubject('Java Programming')">
+        <h2>Java Programming</h2>
+        <p>Object-oriented design, socket communication, and more.</p>
       </div>
 
-      <div class="card" onclick="selectSubject('Java Programming')">
-        <h3>Java Programming</h3>
-        <p>Object-oriented design, socket communication, and threading.</p>
+      <div class="card" onclick="selectSubject('ADSA')">
+        <h2>ADSA</h2>
+        <p>Advanced Data Structures and Algorithms — master complexity!</p>
       </div>
     </div>
 
-    <section class="ai-section">
-      <video id="video" width="420" height="320" autoplay muted></video>
-      <p id="status">Loading AI models...</p>
-      <button id="backBtn" onclick="goBack()">Back</button>
-    </section>
-  </main>
+    <!-- AI Detection Section -->
+    <div class="ai-section" style="display: none;">
+      <video id="video" width="500" height="380" autoplay muted></video>
+      <p id="status"></p>
+    </div>
+
+    <!-- Back Button -->
+    <button id="backBtn" onclick="goBack()" style="display: none;">Back</button>
+  </div>
 
   <footer>
-    <p>© 2025 AI Emotion–Based Tutor | Built with ❤️ by Rakshak Gupta </p>
+    <p>© 2025 AI Emotion–Based Tutor | Built with ❤️ by Rakshak Gupta</p>
   </footer>
 </body>
 </html>
