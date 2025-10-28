@@ -3,101 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Subjects Portfolio</title>
+  <title>AI Emotion-Based Tutor</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
   <canvas id="particle-canvas"></canvas>
   <div class="overlay"></div>
 
   <header>
-    <h1>My GitHub Project</h1>
-    <p>Operating Systems • ADSA • Java</p>
+    <h1>AI Emotion-Based Tutor</h1>
+    <p>Learn interactively — your tutor adapts to your mood.</p>
   </header>
 
   <main>
-    <section class="subjects">
-      <div class="card">
+    <section id="subjectSelection" class="subjects">
+      <div class="card" onclick="selectSubject('os')">
         <h2>Operating Systems (OS)</h2>
-        <p>Learn about processes, memory management, synchronization, and scheduling.</p>
+        <p>Learn how your computer manages resources.</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="selectSubject('adsa')">
         <h2>ADSA</h2>
-        <p>Analyze data structures and algorithms for scalable and efficient computing.</p>
+        <p>Understand algorithms and data structures deeply.</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="selectSubject('java')">
         <h2>Java Programming</h2>
-        <p>Object-oriented design, socket communication, and multithreading in Java.</p>
+        <p>Build powerful and scalable applications.</p>
       </div>
+    </section>
+
+    <section id="learningSection" style="display: none;">
+      <h2 id="subjectTitle"></h2>
+      <p id="lessonText"></p>
+      <video id="video" width="400" height="300" autoplay muted></video>
+      <p id="feedback"></p>
+      <button onclick="goBack()">Back</button>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 My GitHub Project | Built with ❤️</p>
+    <p>© 2025 AI Tutor | Built with ❤️ using JavaScript & face-api.js</p>
   </footer>
-
-  <script>
-    // Moving background effect
-    document.addEventListener("mousemove", (e) => {
-      const moveX = (e.clientX * -0.03);
-      const moveY = (e.clientY * -0.03);
-      document.body.style.backgroundPosition = `${moveX}px ${moveY}px`;
-    });
-
-    // Particle animation
-    const canvas = document.getElementById("particle-canvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.8;
-        this.speedY = (Math.random() - 0.5) * 0.8;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > w) this.speedX *= -1;
-        if (this.y < 0 || this.y > h) this.speedY *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0,255,255,0.8)";
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 120; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, w, h);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animateParticles);
-    }
-
-    initParticles();
-    animateParticles();
-  </script>
 </body>
 </html>
