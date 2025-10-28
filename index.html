@@ -1,129 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion-Aware AI Tutor | Rakshak Gupta</title>
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #fff;
-            text-align: center;
-        }
-        header {
-            background: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        header h1 {
-            margin: 10px 0 5px;
-            color: #00c6ff;
-            font-size: 2.2em;
-        }
-        header p {
-            margin: 0;
-            color: #ddd;
-            font-size: 1em;
-        }
-        .container {
-            margin-top: 30px;
-        }
-        .mode-button, .back-button, .start-button {
-            background: #00c6ff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 20px;
-            margin: 10px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .mode-button:hover, .back-button:hover, .start-button:hover {
-            background: #0099cc;
-        }
-        video {
-            border-radius: 12px;
-            margin-top: 20px;
-            width: 80%;
-            max-width: 600px;
-        }
-        .credits {
-            margin-top: 40px;
-            font-size: 1em;
-            color: #bbb;
-        }
-        footer {
-            margin-top: 60px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            font-size: 0.9em;
-            color: #aaa;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion-Aware AI Tutor | Rakshak Gupta</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Emotion-Aware AI Tutor for Personalized E-Learning</h1>
-        <p>Real-Time Emotion Recognition and Adaptive Learning Experience</p>
-    </header>
+  <header>
+    <h1>Emotion-Aware AI Tutor for Personalized E-Learning</h1>
+    <p>Detects your emotions and adapts learning for OS, ADSA, and Java</p>
+  </header>
 
-    <div class="container">
-        <h2>Emotion Recognition Game</h2>
-        
-        <!-- Mode Selection Screen -->
-        <div id="modeSelection" class="fade-in">
-            <button class="mode-button" onclick="selectMode('liveDetection')">Live Emotion Detection</button>
-            <button class="mode-button" onclick="selectMode('challenge')">Emotion Detection Challenge</button>
-            <button class="mode-button" onclick="selectMode('ageGenderDetection')">Age & Gender Detection</button>
-        </div>
-        
-        <!-- Game Screen -->
-        <div id="gameContainer" class="fade-in" style="display:none;">
-            <h2 id="gameTitle">Game</h2>
-            <button class="back-button" onclick="goBack()">Back</button>
-            <button class="start-button" onclick="startGame()">Start Game</button>
-            
-            <!-- Video Container with Emoji Overlay -->
-            <div id="videoContainer" style="position: relative;">
-                <video id="video" autoplay muted></video>
-                <div id="emojiDisplay" class="emoji-overlay" style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); font-size: 4em; pointer-events: none;"></div>
-            </div>
-            
-            <!-- Game Info Display -->
-            <div id="gameInfo">
-                <p><strong>Detected Emotion:</strong> <span id="emotion">N/A</span></p>
-                <p id="targetEmotion" style="display: none;"><strong>Target Emotion:</strong> <span>N/A</span></p>
-                <p id="scoreDisplay" style="display: none;"><strong>Score:</strong> <span id="score">0</span></p>
-                <p id="timerDisplay" style="display: none;"><strong>Time Remaining:</strong> <span id="timer">30</span> seconds</p>
-                <p id="ageGenderDisplay" style="display: none;"><strong>Age:</strong> <span id="age">N/A</span>, <strong>Gender:</strong> <span id="gender">N/A</span></p>
-            </div>
-        </div>
-
-        <!-- Project Info Section -->
-        <section style="margin-top: 50px;">
-            <h3>📘 Project Goal</h3>
-            <p>
-                This project aims to create an intelligent AI-driven tutor capable of recognizing students’ emotions in real time 
-                to enhance e-learning engagement and adapt content dynamically for personalized education.
-            </p>
-        </section>
-
-        <!-- Credits -->
-        <div class="credits">
-            <p><strong>Developed by:</strong> Rakshak Gupta</p>
-        </div>
+  <div class="container">
+    <!-- Subject Selection -->
+    <div id="subjectSelection" class="fade-in">
+      <h2>Select a Subject</h2>
+      <button class="mode-button" onclick="selectSubject('os')">Operating Systems (OS)</button>
+      <button class="mode-button" onclick="selectSubject('adsa')">ADSA (Algorithms & Data Structures)</button>
+      <button class="mode-button" onclick="selectSubject('java')">Java Programming</button>
     </div>
 
-    <footer>
-        © 2025 Rakshak Gupta | Emotion-Aware AI Tutor | Hosted on GitHub Pages
-    </footer>
+    <!-- Learning Section -->
+    <div id="learningSection" class="fade-in" style="display:none;">
+      <h2 id="subjectTitle"></h2>
+      <p id="lessonText"></p>
 
-    <!-- Load face-api.js library and main script -->
-    <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/dist/face-api.min.js"></script>
-    <script defer src="script.js"></script>
+      <video id="video" autoplay muted></video>
+      <div id="feedback" style="margin-top:20px; font-size:1.2em;"></div>
+
+      <button class="back-button" onclick="goBack()">Back to Subjects</button>
+    </div>
+
+    <div class="credits">
+      <p><strong>Developed by:</strong> Rakshak Gupta</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Rakshak Gupta | Emotion-Aware AI Tutor
+  </footer>
+
+  <!-- Scripts -->
+  <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
