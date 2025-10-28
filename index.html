@@ -3,12 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion Recognition Game</title>
+    <title>Emotion-Aware AI Tutor | Rakshak Gupta</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        header h1 {
+            margin: 10px 0 5px;
+            color: #00c6ff;
+            font-size: 2.2em;
+        }
+        header p {
+            margin: 0;
+            color: #ddd;
+            font-size: 1em;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .mode-button, .back-button, .start-button {
+            background: #00c6ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .mode-button:hover, .back-button:hover, .start-button:hover {
+            background: #0099cc;
+        }
+        video {
+            border-radius: 12px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .credits {
+            margin-top: 40px;
+            font-size: 1em;
+            color: #bbb;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Emotion-Aware AI Tutor for Personalized E-Learning</h1>
+        <p>Real-Time Emotion Recognition and Adaptive Learning Experience</p>
+    </header>
+
     <div class="container">
-        <h1>Emotion Recognition Game</h1>
+        <h2>Emotion Recognition Game</h2>
         
         <!-- Mode Selection Screen -->
         <div id="modeSelection" class="fade-in">
@@ -39,18 +103,24 @@
             </div>
         </div>
 
-        <!-- Team Credits Section -->
+        <!-- Project Info Section -->
+        <section style="margin-top: 50px;">
+            <h3>📘 Project Goal</h3>
+            <p>
+                This project aims to create an intelligent AI-driven tutor capable of recognizing students’ emotions in real time 
+                to enhance e-learning engagement and adapt content dynamically for personalized education.
+            </p>
+        </section>
+
+        <!-- Credits -->
         <div class="credits">
-            <p><strong>Developed By:</strong></p>
-            <p><strong>Team Leader:</strong> <strong>Ansh Aggarwal</strong></p>
-            <p><strong>Members:</strong></p>
-            <ul>
-                <li>Siddharth Pandey</li>
-                <li>Shivam Bhela</li>
-                <li>Gangesh Goyal</li>
-            </ul>
+            <p><strong>Developed by:</strong> Rakshak Gupta</p>
         </div>
     </div>
+
+    <footer>
+        © 2025 Rakshak Gupta | Emotion-Aware AI Tutor | Hosted on GitHub Pages
+    </footer>
 
     <!-- Load face-api.js library and main script -->
     <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/dist/face-api.min.js"></script>
